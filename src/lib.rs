@@ -1,7 +1,7 @@
 // TODO: Error handling.
 // TODO: Reduce heap allocations.
 
-fn get_hypervolume(pts: &Vec<Vec<f64>>, ref_pt: &Vec<f64>) -> f64 {
+pub fn get_hypervolume(pts: &Vec<Vec<f64>>, ref_pt: &Vec<f64>) -> f64 {
     get_hypervolume_recursive(pts, ref_pt)
 }
 
@@ -96,7 +96,7 @@ mod tests {
 
         let contents = std::fs::read_to_string(filename).unwrap();
 
-        for (i, line) in contents.lines().enumerate() {
+        for line in contents.lines() {
             let mut words = line.split_whitespace();
             let pts_str = words.next().expect("No points");
             let ref_pt_str = words.next().expect("No reference point");
