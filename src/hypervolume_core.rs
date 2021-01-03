@@ -1,13 +1,13 @@
 // TODO: Reduce heap allocations.
 
-pub fn compute(pts: &Vec<Vec<f64>>, ref_pt: &Vec<f64>) -> f64 {
+pub fn compute(pts: &[Vec<f64>], ref_pt: &[f64]) -> f64 {
     if ref_pt.is_empty() {
         panic!("Reference point must have at least one dimension");
     }
     get_hypervolume_recursive(pts, ref_pt)
 }
 
-fn get_hypervolume_recursive(pts: &[Vec<f64>], ref_pt: &Vec<f64>) -> f64 {
+fn get_hypervolume_recursive(pts: &[Vec<f64>], ref_pt: &[f64]) -> f64 {
     match pts.len() {
         1 => get_hypervolume_two_points(&pts[0], &ref_pt),
         2 => {
@@ -28,7 +28,7 @@ fn get_hypervolume_recursive(pts: &[Vec<f64>], ref_pt: &Vec<f64>) -> f64 {
     }
 }
 
-fn get_hypervolume_two_points(pt0: &Vec<f64>, pt1: &Vec<f64>) -> f64 {
+fn get_hypervolume_two_points(pt0: &[f64], pt1: &[f64]) -> f64 {
     assert_eq!(pt0.len(), pt1.len());
     assert!(!pt0.is_empty());
 
@@ -37,7 +37,7 @@ fn get_hypervolume_two_points(pt0: &Vec<f64>, pt1: &Vec<f64>) -> f64 {
         .fold(1.0, |prod, (&crd0, &crd1)| prod * (crd0 - crd1).abs())
 }
 
-fn get_max_coordinates(pt0: &Vec<f64>, pt1: &Vec<f64>) -> Vec<f64> {
+fn get_max_coordinates(pt0: &[f64], pt1: &[f64]) -> Vec<f64> {
     assert_eq!(pt0.len(), pt1.len());
     assert!(!pt0.is_empty());
 
@@ -47,10 +47,10 @@ fn get_max_coordinates(pt0: &Vec<f64>, pt1: &Vec<f64>) -> Vec<f64> {
         .collect()
 }
 
-fn get_exclusive_hypervolume(pt: &Vec<f64>, pts: &[Vec<f64>], ref_pt: &Vec<f64>) -> f64 {
+fn get_exclusive_hypervolume(pt: &[f64], pts: &[Vec<f64>], ref_pt: &[f64]) -> f64 {
     let mut limited_pts: Vec<Vec<f64>> = Vec::new();
 
-    if pts.len() > 0 {
+    if !pts.is_empty() {
         let intersection_pts: Vec<Vec<f64>> = (0..pts.len())
             .map(|i| get_max_coordinates(&pts[i], &pt))
             .collect();

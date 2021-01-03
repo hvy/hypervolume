@@ -124,7 +124,7 @@ mod tests {
             }
 
             // Parse reference points.
-            let ref_pt = ref_pt_str
+            let ref_pt: Vec<f64> = ref_pt_str
                 .trim_start_matches("[")
                 .trim_end_matches("]")
                 .split(",")
